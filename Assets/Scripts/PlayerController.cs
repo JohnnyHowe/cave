@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         if (state == PlayerState.ducking)
         {
             currentDuckTime -= Time.deltaTime;
-            if (currentDuckTime <= 0)
+            if (currentDuckTime <= 0 && CanStand())
             {
                 state = PlayerState.running;
             }
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         switch (swipeDirection)
         {
             case SwipeDirection.up:
-                if (OnGround())
+                if (OnGround() && CanStand())
                 {
                     Jump();
                 }
@@ -92,6 +92,16 @@ public class PlayerController : MonoBehaviour
     bool OnGround()
     {
         return !!Physics2D.OverlapBox(groundCheck.position, groundCheck.lossyScale, 0, groundLayer);
+    }
+
+    bool CanStand()
+    {
+        float margin = 0.1f;
+        return !Physics2D.OverlapBox(
+            runStateChange.body.transform.position + margin * Vector3.up,
+            runStateChange.body.transform.lossyScale - margin * Vector3.up,
+            0, groundLayer
+            );
     }
 
     void Jump()
