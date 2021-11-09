@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
     public float jumpHeight = 4;
+    public float accelerationForce = 1f;
+    public float maxSpeed = 1f;
     public LayerMask groundLayer;
     public Transform groundCheck;
     public float minDuckTime = 1f;
@@ -57,12 +59,21 @@ public class PlayerController : MonoBehaviour
         }
 
         // Jumping finish check
-        if (state == PlayerState.jumping && OnGround() && rb2d.velocity.y < 0) {
+        if (state == PlayerState.jumping && OnGround() && rb2d.velocity.y < 0)
+        {
             state = PlayerState.running;
         }
+
+        // Run speed
+        rb2d.AddForce(Vector2.right * accelerationForce);
+        rb2d.velocity = new Vector2(
+            Mathf.Min(maxSpeed, rb2d.velocity.x),
+            rb2d.velocity.y
+            );
     }
 
-    void Update() {
+    void Update()
+    {
         SwipeDirection swipeDirection = InputController.Instance.GetSwipeDirection();
         switch (swipeDirection)
         {
