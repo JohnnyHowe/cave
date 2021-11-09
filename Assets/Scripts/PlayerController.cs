@@ -15,9 +15,11 @@ public class PlayerController : MonoBehaviour
     public float duckDownforce = 10f;
     public float duckImpluse = 10f;
     public float duckForce = 1f;
+    public float duckMass = 10f;
     public PlayerStateChange runStateChange;
     public PlayerStateChange jumpStateChange;
     public PlayerStateChange duckStateChange;
+    public PlayerStateChange fallStateChange;
 
     float currentDuckTime = 0;
 
@@ -42,14 +44,25 @@ public class PlayerController : MonoBehaviour
     const float gravity = 9.8f;
     bool addedDuckImpluse = false;
     Rigidbody2D rb2d;
+    float mass;
 
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        mass = rb2d.mass;
     }
 
     void FixedUpdate()
     {
+        // Falling finish check
+        if (state == PlayerState.falling)
+        {
+            if (OnGround())
+            {
+                Duck();
+            }
+        }
+
         // Ducking finish check
         if (state == PlayerState.ducking)
         {
@@ -61,14 +74,24 @@ public class PlayerController : MonoBehaviour
             }
             rb2d.AddForce(Vector2.down * duckDownforce);
 
-            if (!addedDuckImpluse && OnGround())
+            if (!addedDuckImpluse)
             {
                 addedDuckImpluse = true;
                 rb2d.velocity = new Vector2(0, rb2d.velocity.y);
                 rb2d.AddForce(Vector2.right * duckImpluse);
             }
-        } else {
+        }
+        else
+        {
+            rb2d.mass = mass;
             addedDuckImpluse = false;
+            // Run speed
+            rb2d.AddForce(Vector2.right * accelerationForce);
+            rb2d.velocity = new Vector2(
+                Mathf.Min(maxRunSpeed, rb2d.velocity.x),
+                rb2d.velocity.y
+                );
+
         }
 
         // Jumping finish check
@@ -77,15 +100,6 @@ public class PlayerController : MonoBehaviour
             state = PlayerState.running;
         }
 
-        if (state == PlayerState.running)
-        {
-            // Run speed
-            rb2d.AddForce(Vector2.right * accelerationForce);
-            rb2d.velocity = new Vector2(
-                Mathf.Min(maxRunSpeed, rb2d.velocity.x),
-                rb2d.velocity.y
-                );
-        }
     }
 
     void Update()
@@ -100,7 +114,7 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case SwipeDirection.down:
-                Duck();
+                Fall();
                 break;
         }
     }
@@ -128,8 +142,14 @@ public class PlayerController : MonoBehaviour
         state = PlayerState.jumping;
     }
 
+    void Fall()
+    {
+        state = PlayerState.falling;
+    }
+
     void Duck()
     {
+        rb2d.mass = duckMass;
         state = PlayerState.ducking;
         currentDuckTime = minDuckTime;
     }
@@ -159,6 +179,7 @@ public enum PlayerState
     running,
     jumping,
     ducking,
+    falling,
 }
 
 [System.Serializable]
