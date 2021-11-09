@@ -8,11 +8,13 @@ public class PlayerController : MonoBehaviour
 {
     public float jumpHeight = 4;
     public float accelerationForce = 1f;
-    public float maxSpeed = 1f;
+    public float maxRunSpeed = 1f;
     public LayerMask groundLayer;
     public Transform groundCheck;
     public float minDuckTime = 1f;
-
+    public float duckDownforce = 10f;
+    public float duckImpluse = 10f;
+    public float duckForce = 1f;
     public PlayerStateChange runStateChange;
     public PlayerStateChange jumpStateChange;
     public PlayerStateChange duckStateChange;
@@ -37,8 +39,8 @@ public class PlayerController : MonoBehaviour
         }
     }
     PlayerState _state = PlayerState.running;
-
     const float gravity = 9.8f;
+    bool addedDuckImpluse = false;
     Rigidbody2D rb2d;
 
     void Awake()
@@ -51,11 +53,22 @@ public class PlayerController : MonoBehaviour
         // Ducking finish check
         if (state == PlayerState.ducking)
         {
+            rb2d.AddForce(duckForce * Vector2.right);
             currentDuckTime -= Time.deltaTime;
             if (currentDuckTime <= 0 && CanStand())
             {
                 state = PlayerState.running;
             }
+            rb2d.AddForce(Vector2.down * duckDownforce);
+
+            if (!addedDuckImpluse && OnGround())
+            {
+                addedDuckImpluse = true;
+                rb2d.velocity = new Vector2(0, rb2d.velocity.y);
+                rb2d.AddForce(Vector2.right * duckImpluse);
+            }
+        } else {
+            addedDuckImpluse = false;
         }
 
         // Jumping finish check
@@ -64,12 +77,15 @@ public class PlayerController : MonoBehaviour
             state = PlayerState.running;
         }
 
-        // Run speed
-        rb2d.AddForce(Vector2.right * accelerationForce);
-        rb2d.velocity = new Vector2(
-            Mathf.Min(maxSpeed, rb2d.velocity.x),
-            rb2d.velocity.y
-            );
+        if (state == PlayerState.running)
+        {
+            // Run speed
+            rb2d.AddForce(Vector2.right * accelerationForce);
+            rb2d.velocity = new Vector2(
+                Mathf.Min(maxRunSpeed, rb2d.velocity.x),
+                rb2d.velocity.y
+                );
+        }
     }
 
     void Update()

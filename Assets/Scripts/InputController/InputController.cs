@@ -6,11 +6,11 @@ public class InputController : Singleton<InputController>
 {
     public SwipeDirection GetSwipeDirection()
     {
-        if (Input.GetKeyDown("w"))
+        if (TouchInput.swipedUp)
         {
             return SwipeDirection.up;
         }
-        else if (Input.GetKeyDown("s"))
+        else if (TouchInput.swipedDown)
         {
             return SwipeDirection.down;
         }

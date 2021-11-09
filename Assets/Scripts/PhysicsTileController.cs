@@ -26,7 +26,7 @@ public class PhysicsTileController : MonoBehaviour
         {
             if (child.position.x < currentCutoff)
             {
-                child.GetComponent<PhysicsTile>().Drop();
+                child.GetComponent<SolidTile>().Drop();
             }
         }
     }
