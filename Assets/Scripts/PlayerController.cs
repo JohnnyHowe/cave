@@ -108,9 +108,11 @@ public class PlayerController : MonoBehaviour
         switch (swipeDirection)
         {
             case SwipeDirection.up:
-                if (OnGround() && CanStand())
+                if (OnGround())
                 {
-                    Jump();
+                    if (state != PlayerState.ducking || CanStand()) {
+                        Jump();
+                    }
                 }
                 break;
             case SwipeDirection.down:
@@ -137,7 +139,6 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         float jumpSpeed = Mathf.Sqrt(2 * jumpHeight * gravity * rb2d.gravityScale);
-        // float jumpForce = rb2d.mass * jumpSpeed;
         rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
         state = PlayerState.jumping;
     }
