@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3188262813323860297}
   - component: {fileID: 3188262813323860296}
   - component: {fileID: 3188262813323860295}
+  - component: {fileID: 1294233834771332305}
   m_Layer: 6
   m_Name: Rock
   m_TagString: Untagged
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f8183e502d4eb1a43a19b77226511d11, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -2182124076254010665, guid: f8183e502d4eb1a43a19b77226511d11, type: 3}
+  m_Color: {r: 0.6156863, g: 0.5411765, b: 0.74509805, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -144,3 +145,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1294233834771332305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3188262813323860298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d6d08fd2e234cd4090ccc3ee6b52c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: -2182124076254010665, guid: f8183e502d4eb1a43a19b77226511d11, type: 3}
+  - {fileID: 2115267796186251350, guid: f8183e502d4eb1a43a19b77226511d11, type: 3}
