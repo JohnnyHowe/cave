@@ -6,24 +6,24 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    public float jumpHeight = 4;
+    [Header("Horizontal Movement")]
     public float accelerationForce = 1f;
     public float maxRunSpeed = 1f;
+    public float minSlideTime = 1f;
+    public float slideImpulse = 100f;
+    public float passiveSlideForce = 1f;
+    [Header("Vertical Movement")]
+    public float jumpHeight = 4;
+    [Header("Other")]
     public LayerMask groundLayer;
     public Transform groundCheck;
-    public float minDuckTime = 1f;
-    public float duckDownforce = 10f;
-    public float duckImpluse = 10f;
-    public float duckForce = 1f;
-    public float duckMass = 10f;
     public PlayerStateChange runStateChange;
     public PlayerStateChange jumpStateChange;
-    public PlayerStateChange duckStateChange;
-    public PlayerStateChange fallStateChange;
+    public PlayerStateChange slideStateChange;
+    public PlayerStateChange dropStateChange;
 
-    float currentDuckTime = 0;
-
-    PlayerState state
+    float currentSlideTime = 0;
+    public PlayerState state
     {
         get { return _state; }
         set
@@ -37,88 +37,81 @@ public class PlayerController : MonoBehaviour
                 last.body.SetActive(false);
                 next.onStart.Invoke();
                 next.body.SetActive(true);
+                Debug.Log(_state);
             }
         }
     }
     PlayerState _state = PlayerState.running;
-    const float gravity = 9.8f;
-    bool addedDuckImpluse = false;
     Rigidbody2D rb2d;
-    float mass;
 
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        mass = rb2d.mass;
     }
 
     void FixedUpdate()
     {
-        // Falling finish check
-        if (state == PlayerState.falling)
+        // Passive state changes
+        switch (state)
         {
-            if (OnGround())
-            {
-                Duck();
-            }
+            case PlayerState.running:
+                Run();
+                CapSpeed();
+                break;
+            case PlayerState.jumping:
+                Run();
+                CapSpeed();
+                if (rb2d.velocity.y < 0 && OnGround())
+                {
+                    state = PlayerState.running;
+                }
+                break;
+            case PlayerState.dropping:
+                Run();
+                CapSpeed();
+                if (OnGround())
+                {
+                    Slide();
+                }
+                break;
+            case PlayerState.sliding:
+                if (!OnGround()) { state = PlayerState.running; }
+                rb2d.AddForce(Vector2.right * passiveSlideForce);
+                currentSlideTime -= Time.fixedDeltaTime;
+                if (currentSlideTime < 0)
+                {
+                    if (CanStand())
+                    {
+                        state = PlayerState.running;
+                    }
+                }
+                break;
         }
-
-        // Ducking finish check
-        if (state == PlayerState.ducking)
-        {
-            rb2d.AddForce(duckForce * Vector2.right);
-            currentDuckTime -= Time.deltaTime;
-            if (currentDuckTime <= 0 && CanStand())
-            {
-                state = PlayerState.running;
-            }
-            rb2d.AddForce(Vector2.down * duckDownforce);
-
-            if (!addedDuckImpluse)
-            {
-                addedDuckImpluse = true;
-                rb2d.velocity = new Vector2(0, rb2d.velocity.y);
-                rb2d.AddForce(Vector2.right * duckImpluse);
-            }
-        }
-        else
-        {
-            rb2d.mass = mass;
-            addedDuckImpluse = false;
-            // Run speed
-            rb2d.AddForce(Vector2.right * accelerationForce);
-            rb2d.velocity = new Vector2(
-                Mathf.Min(maxRunSpeed, rb2d.velocity.x),
-                rb2d.velocity.y
-                );
-
-        }
-
-        // Jumping finish check
-        if (state == PlayerState.jumping && OnGround() && rb2d.velocity.y < 0)
-        {
-            state = PlayerState.running;
-        }
-
     }
 
     void Update()
     {
+        // Active state changes
         SwipeDirection swipeDirection = InputController.Instance.GetSwipeDirection();
         switch (swipeDirection)
         {
             case SwipeDirection.up:
-                if (OnGround())
-                {
-                    if (state != PlayerState.ducking || CanStand()) {
-                        Jump();
-                    }
-                }
+                TryJump();
                 break;
             case SwipeDirection.down:
-                Fall();
+                TrySlide();
                 break;
         }
+    }
+
+    void CapSpeed()
+    {
+        rb2d.velocity = new Vector2(Mathf.Min(maxRunSpeed, rb2d.velocity.x), rb2d.velocity.y);
+    }
+
+    void Run()
+    {
+        rb2d.AddForce(Vector2.right * accelerationForce);
     }
 
     bool OnGround()
@@ -136,23 +129,47 @@ public class PlayerController : MonoBehaviour
             );
     }
 
+    void TrySlide()
+    {
+        if (state != PlayerState.sliding)
+        {
+            if (OnGround())
+            {
+                Slide();
+            }
+            else
+            {
+                Drop();
+            }
+        }
+    }
+
+    void TryJump()
+    {
+        if (OnGround())
+        {
+            Jump();
+        }
+    }
+
+    void Slide()
+    {
+        state = PlayerState.sliding;
+        rb2d.velocity = new Vector2(0, rb2d.velocity.y);
+        rb2d.AddForce(Vector2.right * slideImpulse, ForceMode2D.Impulse);
+        currentSlideTime = minSlideTime;
+    }
+
+    void Drop()
+    {
+        state = PlayerState.dropping;
+    }
+
     void Jump()
     {
-        float jumpSpeed = Mathf.Sqrt(2 * jumpHeight * gravity * rb2d.gravityScale);
+        float jumpSpeed = Mathf.Sqrt(2 * jumpHeight * 9.8f * rb2d.gravityScale);
         rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
         state = PlayerState.jumping;
-    }
-
-    void Fall()
-    {
-        state = PlayerState.falling;
-    }
-
-    void Duck()
-    {
-        rb2d.mass = duckMass;
-        state = PlayerState.ducking;
-        currentDuckTime = minDuckTime;
     }
 
     PlayerStateChange GetPlayerStateChange()
@@ -166,8 +183,8 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerState.jumping:
                 return jumpStateChange;
-            case PlayerState.ducking:
-                return duckStateChange;
+            case PlayerState.sliding:
+                return slideStateChange;
             default:
                 return runStateChange;
         }
@@ -175,12 +192,13 @@ public class PlayerController : MonoBehaviour
 }
 
 
+[System.Serializable]
 public enum PlayerState
 {
     running,
     jumping,
-    ducking,
-    falling,
+    sliding,
+    dropping,
 }
 
 [System.Serializable]

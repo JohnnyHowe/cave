@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2017476415455439482}
   - component: {fileID: 2017476415455439477}
   m_Layer: 0
-  m_Name: DuckBody
+  m_Name: SlideBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,18 +466,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28b2a9f1fe767b439125e9ddc446af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 2.2
   accelerationForce: 10
   maxRunSpeed: 3
+  minSlideTime: 1
+  slideImpulse: 7
+  passiveSlideForce: 2
+  jumpHeight: 2.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 2017476415260031025}
-  minDuckTime: 1
-  duckDownforce: 20
-  duckImpluse: 3000
-  duckForce: 50
-  duckMass: 10
   runStateChange:
     body: {fileID: 2017476415874499076}
     onStart:
@@ -527,10 +525,10 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: stop-jump
+            m_StringArgument: run
             m_BoolArgument: 0
           m_CallState: 2
-  duckStateChange:
+  slideStateChange:
     body: {fileID: 2017476415455439479}
     onStart:
       m_PersistentCalls:
@@ -544,25 +542,25 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: duck
+            m_StringArgument: slide
             m_BoolArgument: 0
           m_CallState: 2
     onEnd:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2017476415992971369}
-          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-          m_MethodName: SetTrigger
-          m_Mode: 5
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_ObjectArgumentAssemblyTypeName: 
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: stop-slide
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  fallStateChange:
+  dropStateChange:
     body: {fileID: 0}
     onStart:
       m_PersistentCalls:

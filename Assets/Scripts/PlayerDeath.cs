@@ -9,7 +9,14 @@ public class PlayerDeath : MonoBehaviour
     void FixedUpdate()
     {
         if (transform.position.y < miny) {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         } 
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown("r")) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
