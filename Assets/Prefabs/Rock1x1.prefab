@@ -160,3 +160,6 @@ MonoBehaviour:
   sprites:
   - {fileID: -2182124076254010665, guid: f8183e502d4eb1a43a19b77226511d11, type: 3}
   - {fileID: 2115267796186251350, guid: f8183e502d4eb1a43a19b77226511d11, type: 3}
+  maxRedVariation: 0.05
+  maxGreenVariation: 0.05
+  maxBlueVariation: 0.05

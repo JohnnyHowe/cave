@@ -6,9 +6,19 @@ using UnityEngine;
 public class RandomSprite : MonoBehaviour
 {
     public Sprite[] sprites;
+    public float maxRedVariation;
+    public float maxGreenVariation;
+    public float maxBlueVariation;
 
     void Start()
     {
-        GetComponent<SpriteRenderer>().sprite = Utils.MoreRandom.RandomChoice(sprites);
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.sprite = Utils.MoreRandom.RandomChoice(sprites);
+
+        Color color = renderer.color;
+        color.r += maxRedVariation * Random.value;
+        color.b += maxGreenVariation * Random.value;
+        color.g += maxBlueVariation * Random.value;
+        renderer.color = color;
     }
 }
