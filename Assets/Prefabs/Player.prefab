@@ -516,19 +516,7 @@ MonoBehaviour:
           m_CallState: 2
     onEnd:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2017476415992971369}
-          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-          m_MethodName: SetTrigger
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: run
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
     canRepeat: 1
   slideStateChange:
     body: {fileID: 2017476415455439479}
@@ -568,6 +556,27 @@ MonoBehaviour:
     onStart:
       m_PersistentCalls:
         m_Calls: []
+    onEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    canRepeat: 0
+  fallingStateChange:
+    body: {fileID: 3095842702579872102}
+    onStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2017476415992971369}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: SetTrigger
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: fall
+            m_BoolArgument: 0
+          m_CallState: 2
     onEnd:
       m_PersistentCalls:
         m_Calls: []

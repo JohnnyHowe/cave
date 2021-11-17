@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public PlayerStateChange jumpStateChange;
     public PlayerStateChange slideStateChange;
     public PlayerStateChange dropStateChange;
+    public PlayerStateChange fallingStateChange;
 
     float currentSlideTime = 0;
     public PlayerState state
@@ -62,9 +63,9 @@ public class PlayerController : MonoBehaviour
             case PlayerState.jumping:
                 Run();
                 CapSpeed();
-                if (rb2d.velocity.y < 0 && OnGround())
+                if (rb2d.velocity.y < 0)
                 {
-                    state = PlayerState.running;
+                    state = PlayerState.falling;
                 }
                 break;
             case PlayerState.dropping:
@@ -85,6 +86,11 @@ public class PlayerController : MonoBehaviour
                     {
                         state = PlayerState.running;
                     }
+                }
+                break;
+            case PlayerState.falling:
+                if (OnGround()) {
+                    state = PlayerState.running;
                 }
                 break;
         }
@@ -186,6 +192,8 @@ public class PlayerController : MonoBehaviour
                 return jumpStateChange;
             case PlayerState.sliding:
                 return slideStateChange;
+            case PlayerState.falling:
+                return fallingStateChange;
             default:
                 return runStateChange;
         }
@@ -200,6 +208,7 @@ public enum PlayerState
     jumping,
     sliding,
     dropping,
+    falling,
 }
 
 [System.Serializable]
