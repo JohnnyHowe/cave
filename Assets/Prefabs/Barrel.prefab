@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3705115254187529253}
   - component: {fileID: 3705115254187529256}
   - component: {fileID: 3705115254187529254}
-  - component: {fileID: 3705115254187529257}
+  - component: {fileID: 4699249169609743887}
   m_Layer: 6
   m_Name: Barrel
   m_TagString: Untagged
@@ -105,8 +105,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &3705115254187529257
-BoxCollider2D:
+--- !u!60 &4699249169609743887
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -114,7 +114,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 3705115254187529252}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 41d71525bb3bbf2429100777fa3aacec, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -128,6 +128,17 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.29239082, y: 0.48649645}
+      - {x: -0.29136276, y: 0.48799372}
+      - {x: -0.4143963, y: 0.35888338}
+      - {x: -0.4768982, y: 0.1810708}
+      - {x: -0.4876995, y: -0.17417145}
+      - {x: -0.42939758, y: -0.35227895}
+      - {x: -0.29946518, y: -0.48109484}
+      - {x: 0.29779243, y: -0.48919702}
+      - {x: 0.4251995, y: -0.3630817}
+      - {x: 0.4849968, y: -0.18738008}
+      - {x: 0.4876995, y: 0.17746258}
+      - {x: 0.42910576, y: 0.3540721}

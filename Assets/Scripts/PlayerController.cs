@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
                 last.body.SetActive(false);
                 next.onStart.Invoke();
                 next.body.SetActive(true);
-                Debug.Log(_state);
             }
         }
     }
