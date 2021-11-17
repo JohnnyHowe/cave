@@ -20,7 +20,7 @@ public class TilePlaceholderConverter : MonoBehaviour
 
     void FillSection(Transform section)
     {
-        Vector2 sectionSize = section.transform.localScale;
+        Vector2 sectionSize = new Vector2((int) section.transform.localScale.x, (int) section.transform.localScale.y);
         int[,] section_array = new int[(int)sectionSize.y, (int)sectionSize.x];
         for (int index = 0; index < tiles.Length; index++)
         {
