@@ -136,11 +136,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8647407836914278232, guid: db516543e6d7d8d4c9ec1841df9875b0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8647407836914278233, guid: db516543e6d7d8d4c9ec1841df9875b0, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8647407836914278233, guid: db516543e6d7d8d4c9ec1841df9875b0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8647407836914278233, guid: db516543e6d7d8d4c9ec1841df9875b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1552036
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8647407836914278233, guid: db516543e6d7d8d4c9ec1841df9875b0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8647407836914278234, guid: db516543e6d7d8d4c9ec1841df9875b0, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db516543e6d7d8d4c9ec1841df9875b0, type: 3}
 --- !u!1001 &305938873
@@ -193,7 +197,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8581814963860741137, guid: 3e4c17f472d6f174f98b28c0907dbeb6, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8581814963860741137, guid: 3e4c17f472d6f174f98b28c0907dbeb6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -387,7 +391,7 @@ Transform:
   m_LocalScale: {x: 1000, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1497241756
 BoxCollider2D:
@@ -428,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2017476415992971375, guid: 7fce76ba0ac8f6d4b87be487c9e70118, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2017476415992971375, guid: 7fce76ba0ac8f6d4b87be487c9e70118, type: 3}
       propertyPath: m_LocalPosition.x
