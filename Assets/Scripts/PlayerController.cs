@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
                 last.body.SetActive(false);
                 next.onStart.Invoke();
                 next.body.SetActive(true);
+            } else if (GetPlayerStateChange(value).canRepeat) {
+                GetPlayerStateChange(value).onStart.Invoke();
             }
         }
     }
@@ -206,4 +208,5 @@ public struct PlayerStateChange
     public GameObject body;
     public UnityEvent onStart;
     public UnityEvent onEnd;
+    public bool canRepeat;
 }

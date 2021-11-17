@@ -496,6 +496,7 @@ MonoBehaviour:
     onEnd:
       m_PersistentCalls:
         m_Calls: []
+    canRepeat: 0
   jumpStateChange:
     body: {fileID: 3095842702579872102}
     onStart:
@@ -528,6 +529,7 @@ MonoBehaviour:
             m_StringArgument: run
             m_BoolArgument: 0
           m_CallState: 2
+    canRepeat: 1
   slideStateChange:
     body: {fileID: 2017476415455439479}
     onStart:
@@ -560,6 +562,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    canRepeat: 0
   dropStateChange:
     body: {fileID: 0}
     onStart:
@@ -568,6 +571,7 @@ MonoBehaviour:
     onEnd:
       m_PersistentCalls:
         m_Calls: []
+    canRepeat: 0
 --- !u!114 &1587252057
 MonoBehaviour:
   m_ObjectHideFlags: 0
