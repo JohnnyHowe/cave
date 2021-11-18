@@ -12,6 +12,10 @@ public class PhysicsTileController : MonoBehaviour
     public float minPlayerDistance = 1f;
     float gradient;
 
+    void Start() {
+        currentCutoff = cutoffDisplay.position.x;
+    }
+
     void Update()
     {
         gradient = -Mathf.Tan(cutoffDisplay.eulerAngles.z / (180 / Mathf.PI));
