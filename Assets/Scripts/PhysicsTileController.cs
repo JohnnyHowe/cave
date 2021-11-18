@@ -20,13 +20,20 @@ public class PhysicsTileController : MonoBehaviour
         currentCutoff = Mathf.Max(currentCutoff, player.position.x - minPlayerDistance);
     }
 
-    void DropTiles()
+    void DropTiles() {
+        DropTiles(tileContainer);
+    }
+
+    void DropTiles(Transform container)
     {
-        foreach (Transform child in tileContainer)
+        foreach (Transform child in container)
         {
             if (child.position.x < currentCutoff)
             {
-                child.GetComponent<SolidTile>().Drop();
+                if (child.TryGetComponent(out SolidTile tile)) {
+                    tile.Drop();
+                }
+                DropTiles(child);
             }
         }
     }
