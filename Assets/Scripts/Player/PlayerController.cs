@@ -15,15 +15,17 @@ public class PlayerController : MonoBehaviour
     public float slideMassMultiplier = 10f;
     [Header("Vertical Movement")]
     public float jumpHeight = 4;
-    [Header("Other")]
-    public LayerMask groundLayer;
-    public Transform groundCheck;
+    [Header("States")]
     public PlayerStateChange runStateChange;
     public PlayerStateChange jumpStateChange;
     public PlayerStateChange slideStateChange;
     public PlayerStateChange dropStateChange;
     public PlayerStateChange fallingStateChange;
-
+    [Header("Power Ups")]
+    public bool doubleJump = false;
+    [Header("Other")]
+    public LayerMask groundLayer;
+    public Transform groundCheck;
     float currentSlideTime = 0;
     public PlayerState state
     {
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
     }
     PlayerState _state = PlayerState.running;
     Rigidbody2D rb2d;
+    bool hasDoubleJumped = true;
 
     void Awake()
     {
@@ -54,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (OnGround()) { hasDoubleJumped = false; }
         // Passive state changes
         switch (state)
         {
@@ -156,6 +160,9 @@ public class PlayerController : MonoBehaviour
     {
         if (OnGround())
         {
+            Jump();
+        } else if (doubleJump && !hasDoubleJumped) {
+            hasDoubleJumped = true;
             Jump();
         }
     }

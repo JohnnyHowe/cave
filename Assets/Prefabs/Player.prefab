@@ -279,8 +279,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.025059896, y: -0.47453353}
-  m_Size: {x: 1.0765754, y: 0.050942603}
+  m_Offset: {x: -0.025059879, y: -0.40626073}
+  m_Size: {x: 1.0765755, y: 0.1874891}
   m_Direction: 1
 --- !u!58 &2017476415874499082
 CircleCollider2D:
@@ -311,7 +311,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.16511145, y: -0.12012936}
+  m_Offset: {x: 0.16511145, y: -0.0791655}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -322,7 +322,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5833927, y: 0.68731666}
+  m_Size: {x: 0.5833927, y: 0.6053891}
   m_EdgeRadius: 0
 --- !u!1 &2017476415992971370
 GameObject:
@@ -466,16 +466,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28b2a9f1fe767b439125e9ddc446af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelerationForce: 10
+  runAcceleration: 1
   maxRunSpeed: 3
   minSlideTime: 1
-  slideImpulse: 7
-  passiveSlideForce: 2
-  jumpHeight: 2.2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  groundCheck: {fileID: 2017476415260031025}
+  slideInstantAcceleration: 7.5
+  passiveSlideAcceleration: 0
+  slideMassMultiplier: 10
+  jumpHeight: 3.2
   runStateChange:
     body: {fileID: 2017476415874499076}
     onStart:
@@ -514,9 +511,33 @@ MonoBehaviour:
             m_StringArgument: jump
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 2017476415992971368}
+          m_TargetAssemblyTypeName: UnityEngine.Rigidbody2D, UnityEngine
+          m_MethodName: set_mass
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 5
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onEnd:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2017476415992971368}
+          m_TargetAssemblyTypeName: UnityEngine.Rigidbody2D, UnityEngine
+          m_MethodName: set_mass
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 1
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     canRepeat: 1
   slideStateChange:
     body: {fileID: 2017476415455439479}
@@ -535,18 +556,30 @@ MonoBehaviour:
             m_StringArgument: slide
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 2017476415992971368}
+          m_TargetAssemblyTypeName: UnityEngine.Rigidbody2D, UnityEngine
+          m_MethodName: set_mass
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 50
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onEnd:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2017476415992971369}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 1
+        - m_Target: {fileID: 2017476415992971368}
+          m_TargetAssemblyTypeName: UnityEngine.Rigidbody2D, UnityEngine
+          m_MethodName: set_mass
+          m_Mode: 4
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
-            m_FloatArgument: 0
+            m_FloatArgument: 1
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
@@ -581,6 +614,11 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     canRepeat: 0
+  doubleJump: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  groundCheck: {fileID: 2017476415260031025}
 --- !u!114 &1587252057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db08fab88712d80449c43e0fc10a203b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miny: -2
+  miny: -5
 --- !u!1 &3095842702579872102
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,8 +730,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.025059896, y: -0.47497007}
-  m_Size: {x: 1.0765754, y: 0.050069693}
+  m_Offset: {x: -0.02505988, y: -0.40755063}
+  m_Size: {x: 1.0765755, y: 0.18490922}
   m_Direction: 1
 --- !u!58 &443786542313399064
 CircleCollider2D:
@@ -724,7 +762,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.16511145, y: -0.120565735}
+  m_Offset: {x: 0.16511145, y: -0.07960196}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -735,5 +773,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5833927, y: 0.6881899}
+  m_Size: {x: 0.5833927, y: 0.6062622}
   m_EdgeRadius: 0
