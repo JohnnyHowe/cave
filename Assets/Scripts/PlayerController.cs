@@ -7,11 +7,12 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
     [Header("Horizontal Movement")]
-    public float accelerationForce = 1f;
+    public float runAcceleration = 1f;
     public float maxRunSpeed = 1f;
     public float minSlideTime = 1f;
-    public float slideImpulse = 100f;
-    public float passiveSlideForce = 1f;
+    public float slideInstantAcceleration = 100f;
+    public float passiveSlideAcceleration = 1f;
+    public float slideMassMultiplier = 10f;
     [Header("Vertical Movement")]
     public float jumpHeight = 4;
     [Header("Other")]
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.sliding:
                 if (!OnGround()) { state = PlayerState.running; }
-                rb2d.AddForce(Vector2.right * passiveSlideForce);
+                rb2d.velocity += Vector2.right * passiveSlideAcceleration;
                 currentSlideTime -= Time.fixedDeltaTime;
                 if (currentSlideTime < 0)
                 {
@@ -118,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        rb2d.AddForce(Vector2.right * accelerationForce);
+        rb2d.velocity += Vector2.right * runAcceleration;
     }
 
     bool OnGround()
@@ -163,7 +164,7 @@ public class PlayerController : MonoBehaviour
     {
         state = PlayerState.sliding;
         rb2d.velocity = new Vector2(0, rb2d.velocity.y);
-        rb2d.AddForce(Vector2.right * slideImpulse, ForceMode2D.Impulse);
+        rb2d.velocity += Vector2.right * slideInstantAcceleration;
         currentSlideTime = minSlideTime;
     }
 
