@@ -10,11 +10,13 @@ public class PhysicsTileController : MonoBehaviour
     public Transform cutoffDisplay;
     public Transform player;
     public float minPlayerDistance = 1f;
+    float gradient;
 
     void Update()
     {
+        gradient = -Mathf.Tan(cutoffDisplay.eulerAngles.z / (180 / Mathf.PI));
         DropTiles();
-        if (cutoffDisplay) { cutoffDisplay.position = Vector3.right * currentCutoff; }
+        cutoffDisplay.position = Vector3.right * currentCutoff;
 
         currentCutoff += Time.deltaTime * cutoffSpeed;
         currentCutoff = Mathf.Max(currentCutoff, player.position.x - minPlayerDistance);
@@ -24,17 +26,25 @@ public class PhysicsTileController : MonoBehaviour
         DropTiles(tileContainer);
     }
 
+    bool ShouldDrop(Transform tile) {
+        // To prevent big numbers
+        if (gradient > 999) { return tile.transform.position.x < currentCutoff; }
+        
+        float cutoffAtHeight = cutoffDisplay.position.x + gradient * tile.position.y;
+        return tile.position.x < cutoffAtHeight;
+    }
+
     void DropTiles(Transform container)
     {
         foreach (Transform child in container)
         {
-            if (child.position.x < currentCutoff)
+            if (ShouldDrop(child))
             {
                 if (child.TryGetComponent(out SolidTile tile)) {
                     tile.Drop();
                 }
-                DropTiles(child);
             }
+            DropTiles(child);
         }
     }
 }
