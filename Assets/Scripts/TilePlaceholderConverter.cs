@@ -20,7 +20,7 @@ public class TilePlaceholderConverter : MonoBehaviour
 
     void FillSection(Transform section)
     {
-        Vector2 sectionSize = new Vector2((int) section.transform.localScale.x, (int) section.transform.localScale.y);
+        Vector2 sectionSize = new Vector2((int)section.transform.localScale.x, (int)section.transform.localScale.y);
         int[,] section_array = new int[(int)sectionSize.y, (int)sectionSize.x];
         for (int index = 0; index < tiles.Length; index++)
         {
@@ -39,7 +39,17 @@ public class TilePlaceholderConverter : MonoBehaviour
                 {
                     for (int dy = 0; dy < tileSize.y; dy++)
                     {
-                        if (section_array[(int)(attemptPosition.y + dy), (int)(attemptPosition.x + dx)] != 0)
+                        int x = (int)(attemptPosition.x + dx);
+                        int y = (int)(attemptPosition.y + dy);
+                        if (0 <= x && 0 <= y && x < sectionSize.x && y < sectionSize.y)
+                        {
+                            if (section_array[y, x] != 0)
+                            {
+                                clear = false;
+                                break;
+                            }
+                        }
+                        else
                         {
                             clear = false;
                             break;
@@ -83,12 +93,14 @@ public class TilePlaceholderConverter : MonoBehaviour
         tileObj.transform.localPosition = position;
     }
 
-    int RandInt(float min, float max) {
-        return RandInt((int) min, (int) max);
+    int RandInt(float min, float max)
+    {
+        return RandInt((int)min, (int)max);
     }
 
-    int RandInt(int min, int max) {
-        return Mathf.FloorToInt(Random.Range(min, max + 1)) % (max + 1);
+    int RandInt(int min, int max)
+    {
+        return Mathf.Min(max, Mathf.FloorToInt(Random.Range(min, max + 1)));
     }
 }
 
