@@ -9,10 +9,23 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "level-design.md",
+            "file": "player-animation.md",
             "mode": "source"
           }
-        }
+        },
+        "group": "9bb6b0f49be52f21"
+      },
+      {
+        "id": "4bc7a0cf39d7d95d",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "player-animation.md",
+            "mode": "preview"
+          }
+        },
+        "group": "9bb6b0f49be52f21"
       }
     ],
     "direction": "vertical"
@@ -68,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "level-design.md",
+                "file": "player-animation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,9 +101,13 @@
   },
   "active": "a734a75778ec72b4",
   "lastOpenFiles": [
+    "player-animation.md",
     "level-design.md",
-    "inspiration.md",
+    "player-movement.md",
+    "img/stickman-run.png",
     "style.md",
+    "inspiration.md",
+    "img/Pasted image 20211123095306 1.png",
     "img/cave-chaos.png",
     "img/karlson.gif",
     "Pasted image 20211123091737.png"

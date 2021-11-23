@@ -6,8 +6,7 @@ Style is heavily influenced by cave chaos.
 # Conventions
 Each game unit should contain 32 pixels on the foreground layer. So a 1x1 tile is 32x32 pixels.
 # Player
-![[Pasted image 20211123095306.png]]
-Hard vs soft outline?
+![[Pasted image 20211123095306 1.png]]
 ![[player.png]]
 # Tiles
 ![[Pasted image 20211123095318.png]]

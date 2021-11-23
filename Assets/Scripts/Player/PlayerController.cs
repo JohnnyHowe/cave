@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (OnGround()) { hasDoubleJumped = false; }
+        groundCheck.gameObject.SetActive(OnGround());
         // Passive state changes
         switch (state)
         {
@@ -127,7 +128,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void IncreaseXVelocity(float acceleration) {
-        // rb2d.velocity += Vector2.right * acceleration;
         rb2d.AddForce(Vector2.right * acceleration * rb2d.mass, ForceMode2D.Force);
     }
 
