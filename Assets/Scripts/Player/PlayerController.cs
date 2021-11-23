@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.sliding:
                 if (!OnGround()) { state = PlayerState.running; }
-                rb2d.velocity += Vector2.right * passiveSlideAcceleration;
+                IncreaseXVelocity(passiveSlideAcceleration);
                 currentSlideTime -= Time.fixedDeltaTime;
                 if (currentSlideTime < 0)
                 {
@@ -123,7 +123,12 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        rb2d.velocity += Vector2.right * runAcceleration;
+        IncreaseXVelocity(runAcceleration);
+    }
+
+    void IncreaseXVelocity(float acceleration) {
+        // rb2d.velocity += Vector2.right * acceleration;
+        rb2d.AddForce(Vector2.right * acceleration * rb2d.mass, ForceMode2D.Force);
     }
 
     bool OnGround()

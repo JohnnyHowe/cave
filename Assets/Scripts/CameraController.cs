@@ -5,9 +5,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Vector2 offset;
-    public Transform followPoint;
+    public Rigidbody2D followPoint;
     public float speed = 1f;
-    Vector3 velocity = Vector3.zero;
 
     void LateUpdate()
     {
@@ -17,7 +16,9 @@ public class CameraController : MonoBehaviour
             transform.position.z
         ) + (Vector3) offset;
         float distance = (goal - transform.position).magnitude;
-        float smoothTime = speed / distance;
-        transform.position = Vector3.SmoothDamp(transform.position, goal, ref velocity, smoothTime);
+
+        Vector3 newPos = Vector3.Lerp(transform.position, goal, Time.deltaTime * speed * distance);
+        newPos.z = transform.position.z;
+        transform.position = newPos;
     }
 }
